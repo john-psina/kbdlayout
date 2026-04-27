@@ -16,12 +16,16 @@ _LETTERS = {
     'z': 'я', 'x': 'ч', 'c': 'с', 'v': 'м', 'b': 'и', 'n': 'т', 'm': 'ь',
 }
 
-# Non-letter keys whose character differs between layouts (unshifted only).
+# Non-letter keys whose character differs between layouts.
 _PUNCT = {
+    # Unshifted
     '[': 'х', ']': 'ї',
     ';': 'ж', "'": 'є',
     ',': 'б', '.': 'ю', '/': '.',
     '`': "'",
+    # Shifted (Shift+<key> on US ↔ Shift+<key> on UK Enhanced)
+    '@': '"', '#': '№', '$': ';', '^': ':',
+    '&': '?', '?': ',',
 }
 
 _EN_TO_UK_LETTERS: dict[str, str] = {}
