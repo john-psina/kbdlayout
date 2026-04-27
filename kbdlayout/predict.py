@@ -1,5 +1,7 @@
 """Inference helper for the trained layout classifier."""
 
+from __future__ import annotations
+
 from pathlib import Path
 
 import torch
