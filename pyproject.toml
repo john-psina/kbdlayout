@@ -1,0 +1,24 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "kbdlayout"
+version = "0.1.0"
+description = "Neural network-based keyboard layout detector and corrector for Ukrainian/English text"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+keywords = ["keyboard", "layout", "ukrainian", "nlp", "text"]
+dependencies = [
+    "torch>=2.0.0",
+]
+
+[project.scripts]
+kbdlayout = "kbdlayout.cli:main"
+
+[project.urls]
+Repository = "https://github.com/your-username/kbdlayout"
+
+[tool.hatch.build.targets.wheel]
+packages = ["kbdlayout"]
