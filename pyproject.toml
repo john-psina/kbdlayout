@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "kbdlayout"
-version = "0.1.3"
+version = "0.1.31"
 description = "Neural network-based keyboard layout detector and corrector for Ukrainian/English text"
 readme = "README.md"
 requires-python = ">=3.9"
