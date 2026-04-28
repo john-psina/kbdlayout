@@ -15,11 +15,7 @@ Best validation accuracy: **99.58 %** (5 epochs, ~400 000 examples).
 
 ## Installation
 
-```bash
-pip install kbdlayout
-```
-
-Or from source:
+From source:
 
 ```bash
 git clone https://github.com/john-psina/kbdlayout
