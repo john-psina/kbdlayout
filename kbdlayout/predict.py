@@ -63,19 +63,21 @@ class LayoutPredictor:
                 out.append({"text": w, "advice": self.advise(stripped)})
         return out
 
-    def convert(self, text: str, letters_only: bool = True) -> str:
+    def convert(self, text: str, letters_only: bool = True, convert_urls: bool = True) -> str:
         """If text appears wrong-layout, return its layout-corrected form.
 
         `letters_only=True` (default) preserves punctuation so that
         commas/periods stay as commas/periods.  Pass `letters_only=False` to
         also remap punctuation keys that differ between layouts.
+
+        `convert_urls=True` (default) leaves URLs in the text untouched.
         """
         advice = self.advise(text)
         if not advice["wrong_layout"]:
             return text
         if advice["need_layout"] == "uk":
-            return en_to_uk(text, letters_only=letters_only)
-        return uk_to_en(text, letters_only=letters_only)
+            return en_to_uk(text, letters_only=letters_only, convert_urls=convert_urls)
+        return uk_to_en(text, letters_only=letters_only, convert_urls=convert_urls)
 
 
 def _fmt_probs(ps: dict[str, float]) -> str:

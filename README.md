@@ -50,6 +50,10 @@ p.convert("Ghbdsn, zr cghfdb?", letters_only=False) # → "Привітб як �
 p.convert("Ghbdsn? zr cghfdb&", letters_only=False) # → "Привіт, як справи?"
 #  comma → б,  question mark → comma  (physical-key remapping)
 
+# convert_urls=True (default) — URLs are left untouched during conversion
+p.convert("Lbdbnbcz: https://example.com")            # → "Дивитися: https://example.com"
+p.convert("Lbdbnbcz: https://example.com", convert_urls=False) # URL is converted too
+
 # Detailed analysis
 p.advise("Ghbdsn, zr cghfdb?")
 # {

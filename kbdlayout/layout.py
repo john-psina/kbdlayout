@@ -8,6 +8,10 @@ physical key. `en_to_uk` and `uk_to_en` simulate that mistake on existing text
 so we can generate "wrong-layout" training examples from clean corpora.
 """
 
+import re
+
+_URL_RE = re.compile(r'https?://\S+')
+
 _LETTERS = {
     'q': 'й', 'w': 'ц', 'e': 'у', 'r': 'к', 't': 'е', 'y': 'н', 'u': 'г',
     'i': 'ш', 'o': 'щ', 'p': 'з',
@@ -38,21 +42,39 @@ _UK_TO_EN: dict[str, str] = {v: k for k, v in _EN_TO_UK.items()}
 _UK_TO_EN_LETTERS: dict[str, str] = {v: k for k, v in _EN_TO_UK_LETTERS.items()}
 
 
-def en_to_uk(text: str, letters_only: bool = False) -> str:
+def _apply_table(text: str, table: dict[str, str], convert_urls: bool) -> str:
+    if not convert_urls:
+        return "".join(table.get(c, c) for c in text)
+    parts: list[str] = []
+    last = 0
+    for m in _URL_RE.finditer(text):
+        parts.append("".join(table.get(c, c) for c in text[last:m.start()]))
+        parts.append(m.group())
+        last = m.end()
+    parts.append("".join(table.get(c, c) for c in text[last:]))
+    return "".join(parts)
+
+
+def en_to_uk(text: str, letters_only: bool = False, convert_urls: bool = True) -> str:
     """Convert text as if EN-layout keys were pressed but UK layout was active.
 
     `letters_only=True` skips punctuation keys that share characters between
     layouts (",", ".", ";", "[", "]", etc.), which gives nicer conversions for
     real messages where the user only mistyped the letters.
+
+    `convert_urls=True` (default) leaves URLs in the text untouched.
     """
     table = _EN_TO_UK_LETTERS if letters_only else _EN_TO_UK
-    return "".join(table.get(c, c) for c in text)
+    return _apply_table(text, table, convert_urls)
 
 
-def uk_to_en(text: str, letters_only: bool = False) -> str:
-    """Convert text as if UK-layout keys were pressed but EN layout was active."""
+def uk_to_en(text: str, letters_only: bool = False, convert_urls: bool = True) -> str:
+    """Convert text as if UK-layout keys were pressed but EN layout was active.
+
+    `convert_urls=True` (default) leaves URLs in the text untouched.
+    """
     table = _UK_TO_EN_LETTERS if letters_only else _UK_TO_EN
-    return "".join(table.get(c, c) for c in text)
+    return _apply_table(text, table, convert_urls)
 
 
 if __name__ == "__main__":

@@ -22,3 +22,9 @@ Repository = "https://github.com/your-username/kbdlayout"
 
 [tool.hatch.build.targets.wheel]
 packages = ["kbdlayout"]
+
+[dependency-groups]
+dev = ["pytest>=8.0"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
